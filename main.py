@@ -72,6 +72,20 @@ def spawn_bullet(player_pos, direction):
     bullet_pos = [player_pos[0], player_pos[1]]
     bullets.append((bullet_pos, direction))  # 방향도 함께 저장
 
+# 하트 그리기 함수
+def draw_heart(surface, position):
+    # 하트 모양의 좌표를 정의합니다.
+    heart_points = [
+        (position[0] + 10, position[1] + 20),  # 아래 중간
+        (position[0], position[1] + 10),       # 왼쪽 위
+        (position[0] + 5, position[1]),         # 왼쪽 위 꼭지점
+        (position[0] + 10, position[1] + 5),    # 가운데
+        (position[0] + 15, position[1]),        # 오른쪽 위 꼭지점
+        (position[0] + 20, position[1] + 10),  # 오른쪽 위
+        (position[0] + 10, position[1] + 20)   # 아래 중간
+    ]
+    pygame.draw.polygon(surface, RED, heart_points)
+
 # 게임 루프
 running = True
 game_over = False  # 게임 오버 상태 추가
@@ -182,6 +196,10 @@ while running:
         # 점수 표시
         score_text = pygame.font.Font(None, 36).render(f"Score: {score}", True, (0, 0, 0))
         screen.blit(score_text, (10, 10))
+        # 플레이어 체력을 하트로 표시
+        for i in range(player_health):
+            draw_heart(screen, (10 + i * 40, 50))  # 하트를 일정 간격으로 표시
+
 
     # 화면 업데이트
     pygame.display.flip()
